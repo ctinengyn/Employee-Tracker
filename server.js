@@ -70,11 +70,18 @@ const startPrompt = () => {
     });
 };
 
+// View All Employess
 function viewAllEmployees() {
+    
+    // Query to view all employees
   connection.query(
     "SELECT employee.first_name, employee.last_name, role.title, role.salary, department.name, CONCAT(e.first_name, ' ' ,e.last_name) AS Manager FROM employee INNER JOIN role on role.id = employee.role_id INNER JOIN department on department.id = role.department_id left join employee e on employee.manager_id = e.id;",
+
+    // Query from connection
     function (err, res) {
       if (err) throw err;
+
+      // Display query results using console.table
       console.table(res);
       startPrompt();
     }
