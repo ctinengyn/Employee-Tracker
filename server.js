@@ -12,14 +12,14 @@ const connection = mysql.createConnection({
     database: "employees_DB"
 });
 
+// Establishing Connection to database
 connection.connect(function(err) {
     if (err) throw err
     console.log("Connected as Id" + connection.threadId)
     startPrompt();
 });
 
-
-// Initial Prompt 
+// Prompt user to choose an option
 const startApp = () => {
     inquirer.prompt({
         name: 'menuChoice',
