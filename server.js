@@ -20,11 +20,19 @@ connection.connect(function(err) {
 });
 
 // Prompt user to choose an option
-const startApp = () => {
+const startPrompt = () => {
     inquirer.prompt({
-        name: 'menuChoice',
-        type: 'list',
-        message: 'Select an option',
-        choices: startScreen
+        name: "choice",
+        type: "list",
+        message: "What would you like to do?",
+        choices: [
+            "View All Employees",
+            "View All Employees By Role",
+            "View All Employees By Departments",
+            "Update Employee",
+            "Add Employee",
+            "Add Role",
+            "Add Department"
+        ]
     }
 };
