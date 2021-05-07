@@ -27,12 +27,44 @@ const startPrompt = () => {
         message: "What would you like to do?",
         choices: [
             "View All Employees",
-            "View All Employees By Role",
+            "View All Employees By Roles",
             "View All Employees By Departments",
             "Update Employee",
             "Add Employee",
             "Add Role",
             "Add Department"
         ]
-    }
+
+    }).then((answer) => {
+        // Switch case depending on user option
+        switch (answer.choice) {
+            case "View All Employees":
+                viewAllEmployees();
+                break;
+
+            case "View All Employees By Roles":
+                viewAllRoles();
+                break;
+
+            case "View All Employees By Departments":
+                viewAllDepartments();
+                break;
+
+            case "Add Employee":
+                addEmployee();
+                break;
+
+            case "Update Employee":
+                updateEmployee();
+                break;
+
+            case "Add Role":
+                addRole();
+                break;
+
+            case "Add Department":
+                addDepartment();
+                break;
+        }
+    })
 };
