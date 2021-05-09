@@ -70,7 +70,7 @@ const startPrompt = () => {
     });
 };
 
-// View All Employess
+// View all employess
 function viewAllEmployees() {
     
     // Query to view all employees
@@ -95,5 +95,16 @@ function viewAllEmployees() {
     console.table(res)
     startPrompt()
     })
-  }
+  };
+
+  // View all employees by department
+  function viewAllDepartments() {
+    connection.query("SELECT employee.first_name, employee.last_name, department.name AS Department FROM employee JOIN role ON employee.role_id = role.id JOIN department ON role.department_id = department.id ORDER BY employee.id;", 
+    function(err, res) {
+      if (err) throw err
+      console.table(res)
+      startPrompt()
+    })
+  };
+
 }
