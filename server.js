@@ -84,27 +84,54 @@ function viewAllEmployees() {
       // Display query results using console.table
       console.table(res);
       startPrompt();
-    }
+    )
   );
 
   // View all employees by role
   function viewAllRoles() {
     connection.query("SELECT employee.first_name, employee.last_name, role.title AS Title FROM employee JOIN role ON employee.role_id = role.id;", 
-    function(err, res) {
-    if (err) throw err
+    function (err, res) {
+    if (err) throw err;
     console.table(res)
-    startPrompt()
+    startPrompt();
     })
   };
 
   // View all employees by department
   function viewAllDepartments() {
     connection.query("SELECT employee.first_name, employee.last_name, department.name AS Department FROM employee JOIN role ON employee.role_id = role.id JOIN department ON role.department_id = department.id ORDER BY employee.id;", 
-    function(err, res) {
-      if (err) throw err
+    function (err, res) {
+      if (err) throw err;
       console.table(res)
-      startPrompt()
+      startPrompt();
     })
   };
 
+}
+
+
+function addEmployee() { 
+  inquirer.prompt([
+      {
+        name: "firstname",
+        type: "input",
+        message: "Enter their first name "
+      },
+      {
+        name: "lastname",
+        type: "input",
+        message: "Enter their last name "
+      },
+      {
+        name: "role",
+        type: "list",
+        message: "What is their role? ",
+        choices: selectRole()
+      },
+      {
+          name: "choice",
+          type: "rawlist",
+          message: "Whats their managers name?",
+          choices: selectManager()
+      }
 }
