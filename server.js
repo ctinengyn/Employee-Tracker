@@ -109,19 +109,25 @@ function viewAllEmployees() {
 
 }
 
-
+// Add Employee
 function addEmployee() { 
   inquirer.prompt([
+
+    // Prompt user of their first name
       {
         name: "firstname",
         type: "input",
         message: "Enter their first name "
       },
+
+    // Prompt user of their last name
       {
         name: "lastname",
         type: "input",
         message: "Enter their last name "
       },
+    
+    // Prompt user of their role
       {
         name: "role",
         type: "list",
