@@ -206,6 +206,7 @@ function updateEmployee() {
 
 }
 
+// Add Employee Role
 function addRole() { 
   connection.query("SELECT role.title AS Title, role.salary AS Salary FROM role",   function(err, res) {
     inquirer.prompt([
