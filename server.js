@@ -239,6 +239,7 @@ function addRole() {
   });
   }
 
+  // Add Department
   function addDepartment() { 
 
     inquirer.prompt([
