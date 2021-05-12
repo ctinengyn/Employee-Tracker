@@ -242,6 +242,7 @@ function addRole() {
   // Add Department
   function addDepartment() { 
 
+    // Prompt user for name of department
     inquirer.prompt([
         {
           name: "name",
@@ -249,6 +250,8 @@ function addRole() {
           message: "What Department would you like to add?"
         }
     ]).then(function(res) {
+
+      // Add department to the table
         var query = connection.query(
             "INSERT INTO department SET ? ",
             {
