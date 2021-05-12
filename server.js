@@ -167,6 +167,8 @@ function updateEmployee() {
    console.log(res)
   inquirer.prompt([
         {
+
+          // Prompt user to select employee
           name: "lastName",
           type: "rawlist",
           choices: function() {
@@ -179,12 +181,16 @@ function updateEmployee() {
           message: "What is the Employee's last name? ",
         },
         {
+
+          // Select role to update employee
           name: "role",
           type: "rawlist",
           message: "What is the Employees new title? ",
           choices: selectRole()
         },
     ]).then(function(val) {
+
+      // Get ID of role selected
       var roleId = selectRole().indexOf(val.role) + 1
       connection.query("UPDATE employee SET WHERE ?", 
       {
