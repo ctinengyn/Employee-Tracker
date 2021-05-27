@@ -8,3 +8,12 @@ The application gives yout the following options:
 * Update an employee role or manager
 * Delete employee, role, or department
 * View department salary budgets
+
+# Installing
+
+
+npm install mysql
+<br>
+npm install inquirer
+<br>
+npm install console.table
