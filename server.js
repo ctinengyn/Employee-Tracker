@@ -84,8 +84,7 @@ function viewAllEmployees() {
       // Display query results using console.table
       console.table(res);
       startPrompt();
-    )
-  );
+  )
 
   // View all employees by role
   function viewAllRoles() {
