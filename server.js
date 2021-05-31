@@ -15,14 +15,13 @@ const connection = mysql.createConnection({
 // Establishing Connection to database
 connection.connect(function (err) {
   if (err) throw err;
-  console.log("Connected as Id" + connection.threadId);
+  console.log("App listening on PORT" + connection.threadId);
   startPrompt();
 });
 
 // Prompt user to choose an option
 const startPrompt = () => {
-  inquirer
-    .prompt({
+  inquirer.prompt({
       name: "choice",
       type: "list",
       message: "What would you like to do?",
