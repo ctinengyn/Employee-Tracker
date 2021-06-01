@@ -6,10 +6,10 @@ require("console.table");
 // Connection Properties
 const connection = mysql.createConnection({
   host: "localhost",
-  port: 1996,
+  port: 3306,
   user: "root",
   password: "password",
-  database: "employees_DB",
+  database: "employee_trackerdb",
 });
 
 // Establishing Connection to database
@@ -70,8 +70,6 @@ const startPrompt = () => {
 
 // View all employess
 function viewAllEmployees() {
-    
-  var query = "SELECT * FROM employees";
 
     // Query to view all employees
   connection.query(
@@ -85,10 +83,11 @@ function viewAllEmployees() {
       console.table(res);
       startPrompt();
     })
+}
 
   // View all employees by role
   function viewAllRoles() {
-    connection.query("SELECT employee.first_name, employee.last_name, role.title AS Title FROM employee JOIN role ON employee.role_id = role.id;", 
+    connection.query("SELECT * FROM roles", 
     function (err, res) {
     if (err) throw err;
     console.table(res)
@@ -105,8 +104,6 @@ function viewAllEmployees() {
       startPrompt();
     })
   };
-
-}
 
 // Add Employee
 function addEmployee() { 
