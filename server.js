@@ -224,11 +224,15 @@ function selectManager() {
 function addRole() { 
   connection.query("SELECT role.title AS Title, role.salary AS Salary FROM role",   function(err, res) {
     inquirer.prompt([
+
+      // Promt user role title
         {
           name: "Title",
           type: "input",
           message: "What is the roles Title?"
         },
+
+        // Promt user for salary
         {
           name: "Salary",
           type: "input",
