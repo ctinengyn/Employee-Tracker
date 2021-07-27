@@ -17,8 +17,9 @@ The application gives yout the following options:
 
 3. Run `node server.js` to start the application.
 
-
-
+## Example
+![](/assets/example1.png)
+![](/assets/example2.png)
 
 ## Contact
 **Email:**
