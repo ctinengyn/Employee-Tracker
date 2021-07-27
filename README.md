@@ -9,11 +9,20 @@ The application gives yout the following options:
 * Delete employee, role, or department
 * View department salary budgets
 
-# Installing
+## Installation
+
+1. Clone this repository to your local machine.
+
+2. Run `npm install` to install dependencies required for this project.
+
+3. Run `node server.js` to start the application.
 
 
-npm install mysql
-<br>
-npm install inquirer
-<br>
-npm install console.table
+
+
+## Contact
+**Email:**
+ctine.ngyn@gmail.com
+
+**GitHub:**
+[Christine's GitHub](https://github.com/ctinengyn)
