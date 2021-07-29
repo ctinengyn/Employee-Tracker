@@ -22,20 +22,22 @@ connection.connect(function (err) {
 // Prompt user to choose an option
 const startPrompt = () => {
   inquirer
-    .prompt({
+    .prompt([
+      {
       name: "choice",
       type: "list",
       message: "What would you like to do?",
       choices: [
         "View All Employees",
-        "View All Employees By Roles",
-        "View All Employees By Departments",
+        "View All Roles",
+        "View All Departments",
         "Update Employee",
         "Add Employee",
         "Add Role",
-        "Add Department",
-      ],
-    })
+        "Add Department"
+      ]
+      }
+    ])
     .then((answer) => {
       // Switch case depending on user option
       switch (answer.choice) {
@@ -43,11 +45,11 @@ const startPrompt = () => {
           viewAllEmployees();
           break;
 
-        case "View All Employees By Roles":
+        case "View All Roles":
           viewAllRoles();
           break;
 
-        case "View All Employees By Departments":
+        case "View All Departments":
           viewAllDepartments();
           break;
 
@@ -74,7 +76,7 @@ const startPrompt = () => {
 function viewAllEmployees() {
   // Query to view all employees
   connection.query(
-    "SELECT employee.first_name, employee.last_name, role.title, role.salary, department.name, CONCAT(e.first_name, ' ' ,e.last_name) AS Manager FROM employee INNER JOIN role on role.id = employee.role_id INNER JOIN department on department.id = role.department_id left join employee e on employee.manager_id = e.id;",
+    "SELECT employees.first_name, employees.last_name, roles.title, roles.salary, department_id, CONCAT(e.first_name, ' ' ,e.last_name) AS Manager FROM employees INNER JOIN roles on roles.id = employees.role_id INNER JOIN departments on departments.id = roles.department_id left join employees e on employees.manager_id = e.id;",
 
     // Query from connection
     function (err, res) {
@@ -87,7 +89,7 @@ function viewAllEmployees() {
   );
 }
 
-// View all employees by role
+// View all roles
 function viewAllRoles() {
   connection.query("SELECT * FROM roles", function (err, res) {
     if (err) throw err;
@@ -99,7 +101,7 @@ function viewAllRoles() {
 // View all employees by department
 function viewAllDepartments() {
   connection.query(
-    "SELECT employee.first_name, employee.last_name, department.name AS Department FROM employee JOIN role ON employee.role_id = role.id JOIN department ON role.department_id = department.id ORDER BY employee.id;",
+    "SELECT * FROM departments",
     function (err, res) {
       if (err) throw err;
       console.table(res);
@@ -114,46 +116,36 @@ function addEmployee() {
     .prompt([
       // Prompt user of their first name
       {
-        name: "firstname",
+        name: "firstName",
         type: "input",
         message: "Enter their first name ",
       },
 
       // Prompt user of their last name
       {
-        name: "lastname",
+        name: "lastName",
         type: "input",
         message: "Enter their last name ",
       },
 
       // Prompt user of their role
       {
-        name: "role",
-        type: "list",
-        message: "What is their role? ",
-        choices: selectRole(),
-      },
-      {
-        name: "choice",
-        type: "rawlist",
-        message: "Whats their managers name?",
-        choices: selectManager(),
-      },
+        name: "roleId",
+        type: "input",
+        message: "Enter employees role ID "
+      }
     ])
-    .then(function (val) {
-      var roleId = selectRole().indexOf(val.role) + 1;
-      var managerId = selectManager().indexOf(val.choice) + 1;
+    .then(function (answer) {
       connection.query(
-        "INSERT INTO employee SET ?",
+        "INSERT INTO employees SET ?",
         {
-          first_name: val.firstName,
-          last_name: val.lastName,
-          manager_id: managerId,
-          role_id: roleId,
+          first_name: answer.firstName,
+          last_name: answer.lastName,
+          role_id: answer.roleId
         },
         function (err) {
           if (err) throw err;
-          console.table(val);
+          console.table(answer);
           startPrompt();
         }
       );
@@ -163,7 +155,7 @@ function addEmployee() {
 // Update Employee
 function updateEmployee() {
   connection.query(
-    "SELECT employee.last_name, role.title FROM employee JOIN role ON employee.role_id = role.id;",
+    "SELECT employees.last_name, roles.title FROM employees JOIN roles ON employees.role_id = roles.id;",
     function (err, res) {
       // console.log(res)
       if (err) throw err;
@@ -195,7 +187,7 @@ function updateEmployee() {
           // Get ID of role selected
           var roleId = selectRole().indexOf(val.role) + 1;
           connection.query(
-            "UPDATE employee SET WHERE ?",
+            "UPDATE employees SET WHERE ?",
             {
               last_name: val.lastName,
             },
@@ -216,7 +208,7 @@ function updateEmployee() {
 var managersArr = [];
 function selectManager() {
   connection.query(
-    "SELECT first_name, last_name FROM employee WHERE manager_id IS NULL",
+    "SELECT first_name, last_name FROM employees WHERE manager_id IS NULL",
     function (err, res) {
       if (err) throw err;
       for (var i = 0; i < res.length; i++) {
@@ -230,7 +222,7 @@ function selectManager() {
 // Add Employee Role
 function addRole() {
   connection.query(
-    "SELECT role.title AS Title, role.salary AS Salary FROM role",
+    "SELECT roles.title AS Title, roles.salary AS Salary FROM roles",
     function (err, res) {
       inquirer
         .prompt([
@@ -250,7 +242,7 @@ function addRole() {
         ])
         .then(function (res) {
           connection.query(
-            "INSERT INTO role SET ?",
+            "INSERT INTO roles SET ?",
             {
               title: res.Title,
               salary: res.Salary,
